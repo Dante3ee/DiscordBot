@@ -15,12 +15,17 @@ class specCog(commands.Cog):
         if cible.bot:
             await interaction.response.send_message("Tu ne peux pas surveiller un bot 🤖", ephemeral=True)
             return
+        
+        if cible == surveillant:
+            await interaction.response.send_message("https://fr.wikipedia.org/wiki/Trouble_dissociatif_de_l%27identit%C3%A9#Signes_et_sympt%C3%B4mes" \
+            "\nMais je vais faire comme si je n'avais pas vu 😉", ephemeral=True)
 
         self.watchlist[cible.id] = surveillant.id
 
         await interaction.response.send_message(
             f"Je te DM quand **{cible.display_name}** termine sa game", ephemeral=True
         )
+        print(f'{cible} est attendu discretement par {surveillant}')
 
     @commands.Cog.listener()
     async def on_presence_update(self, before: discord.Member, after: discord.Member):

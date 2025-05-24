@@ -7,7 +7,7 @@ class nuspecCog(commands.Cog):
         self.bot = bot
         self.watchlist = {}
 
-    @app_commands.command(name="Jarrive", description="Tu recevras un DM quand la personne termine sa game")
+    @app_commands.command(name="jarrive", description="Tu recevras un DM quand la personne termine sa game")
     @app_commands.describe(cible="La personne à surveiller")
     async def jarrive(self, interaction: discord.Interaction, cible: discord.Member):
         surveillant = interaction.user
@@ -15,13 +15,20 @@ class nuspecCog(commands.Cog):
         if cible.bot:
             await interaction.response.send_message("Tu ne peux pas surveiller un bot 🤖", ephemeral=True)
             return
+        
+        if cible == surveillant:
+            await interaction.response.send_message("https://fr.wikipedia.org/wiki/Trouble_dissociatif_de_l%27identit%C3%A9#Signes_et_sympt%C3%B4mes" \
+            "\nMais je vais faire comme si je n'avais pas vu 😉", ephemeral=True)
+
+
 
         self.watchlist[cible.id] = surveillant.id
 
         await interaction.response.send_message(
             f"Je te DM quand **{cible.display_name}** termine sa game", ephemeral=True
         )
-        await cible.send(f'{surveillant}arrive sur la next')
+        print(f'{cible} est attendu par {surveillant}')
+        await cible.send(f'{surveillant} arrive sur la next')
         
 
     @commands.Cog.listener()
